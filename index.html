@@ -9,6 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+#home p{
+  font-size:18px;   /* keeps it stable */
+  line-height:1.8;
+  font-weight:400;
+}
+
+#home .reading-card{
+  border-left:5px solid gold;
+  background:linear-gradient(to right, #fff, #fffaf0);
+}
+
 .header{
   background:#8B0000;
   color:#fff;
@@ -61,9 +72,13 @@ nav{
 
 .menu-icon{
   cursor:pointer;
-  font-weight:bold;
+  font-weight:700;
   color:#8B0000;
+  font-size:20px;
+  padding:5px 10px;
 }
+
+
 
 .dropdown{
   display:none;
@@ -74,6 +89,7 @@ nav{
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
   border-radius:8px;
   overflow:hidden;
+  font-size:22px;
 }
 
 .dropdown a{
@@ -147,7 +163,7 @@ nav{
   padding:10px 0;
   color:#fff;
   font-size:14px;
-  animation:scrollText 20s linear infinite;
+  animation:scrollText 30s linear infinite;
 }
 
 @keyframes scrollText{
@@ -369,15 +385,25 @@ nav{
 <section id="home" class="page active">
   <h2>Welcome</h2>
 
-<p>
-St. Mary Catholic Church, Damaturu Parish, is a vibrant community of faith dedicated to worship, service, and spiritual growth. Founded on the teachings of Jesus Christ and guided by the traditions of the Catholic Church, the parish serves as a place of prayer, unity, and hope for all who seek God.
+  <div class="reading-card">
+    <div class="reading-title">About St. Mary Catholic Church</div>
 
-As a parish entrusted to the care of the Blessed Virgin Mary, we strive to imitate her humility, obedience, and unwavering faith. Through the celebration of the Holy Mass, the Sacraments, and various pastoral activities, we nurture the spiritual lives of our members and strengthen our bond as one family in Christ.
+    <div class="reading-text">
+      St. Mary Catholic Church, Damaturu Parish, is a vibrant community of faith dedicated to worship, service, and spiritual growth. Founded on the teachings of Jesus Christ and guided by the traditions of the Catholic Church, the parish serves as a place of prayer, unity, and hope for all who seek God.
 
-Our church is not only a place of worship but also a center for charity, evangelization, and community development. We welcome everyone—young and old, visitors and parishioners alike—to join us in praising God and growing together in love and faith.
+      <br><br>
 
-</p>
+      As a parish entrusted to the care of the Blessed Virgin Mary, we strive to imitate her humility, obedience, and unwavering faith. Through the celebration of the Holy Mass, the Sacraments, and various pastoral activities, we nurture the spiritual lives of our members and strengthen our bond as one family in Christ.
+
+      <br><br>
+
+      Our church is not only a place of worship but also a center for charity, evangelization, and community development. We welcome everyone—young and old, visitors and parishioners alike—to join us in praising God and growing together in love and faith.
+    </div>
+  </div>
 </section>
+
+
+
 
 <!-- NEWS -->
 <section id="news" class="page">
@@ -429,8 +455,8 @@ function showPage(id){
 
 /* SAMPLE NEWS */
 const newsData = [
-  {title:"Sunday Mass Update", content:"Mass starts 8:00AM every Sunday"},
-  {title:"Parish Meeting", content:"All members invited on Friday"}
+  {title:"Sunday Mass Update", content:"Hausa Mass starts 6:30AM every Sunday & English Mass starts 8:30AM every Sunday"},
+  {title:"Church Development Project", content:"Dear Parish Family, As we journey together in faith at St. Mary Catholic Church, Damaturu Parish, we are reminded that the Church is not just a building, but a living family of believers united in Christ. Every stone laid, every structure raised, and every effort made in our ongoing church development project is a reflection of our shared love for God and commitment to His house. This is a sacred opportunity for each of us to contribute—no matter how little or much. What matters most is the spirit of generosity and unity behind our giving. When we come together, we are not just building walls; we are building a lasting legacy of faith for ourselves, our children, and future generations. Let us not grow weary or hesitant, but instead give with joyful hearts, knowing that our contributions are acts of worship and service to God. As Scripture reminds us, “God loves a cheerful giver.” May the Blessed Virgin Mary, patroness of our parish, inspire us to remain faithful, generous, and united in purpose. Together, we are building more than a church—we are building the Body of Christ in our community."}
 ];
 
 const newsContainer = document.getElementById("newsContainer");
@@ -448,7 +474,7 @@ newsData.forEach(n=>{
 const tickerText = document.getElementById("tickerText");
 
 // function to shorten text
-function shorten(text, maxLength = 40){
+function shorten(text, maxLength = 200){
   return text.length > maxLength 
     ? text.substring(0, maxLength) + "..." 
     : text;
@@ -470,31 +496,33 @@ tickerText.innerText = "🔔 " + messages.join(" • ");
 
 
 /* SAMPLE READINGS */
-const readings = {
-  
-
-first: {
-title: "First Reading: Acts 6:1‐7",
+const readings = [
+  {
+    title: "First Reading: Acts 6:1‐7",
     content: "About this time, when the number of disciples was increasing, the Hellenists made a complaint against the Hebrews: in the daily distribution their own widows were being overlooked. So the Twelve called a full meeting of the disciples and addressed them, ‘It would not be right for us to neglect the word of God so as to give out food; you, brothers, must select from among yourselves seven men of good reputation, filled with the Spirit and with wisdom; we will hand over this duty to them, and continue to devote ourselves to prayer and to the service of the word.’ The whole assembly approved of this proposal and elected Stephen, a man full of faith and of the Holy Spirit, together with Philip, Prochorus, Nicanor, Timon, Parmenas, and Nicolaus of Antioch, a convert to Judaism. They presented these to the apostles, who prayed and laid their hands on them."
-},
-
-
-
-
-
- second: {
-    title: "Second Reading",
-    content: "The Lord is my shepherd, there is nothing I shall want..."
   },
-psalm: {
-    title: "Responsorial Psalm",
-    content: "The Lord is my shepherd, there is nothing I shall want..."
+
+
+
+  {
+    title: "Responsorial Psalm: Psalm 32(33):1‐2,4‐5,18‐19",
+    content: "May your love be upon us, O Lord, as we place all our hope in you. or Alleluia! Ring out your joy to the Lord, O you just; for praise is fitting for loyal hearts. Give thanks to the Lord upon the harp, with a ten‐stringed lute sing him songs. May your love be upon us, O Lord, as we place all our hope in you. or Alleluia! For the word of the Lord is faithful and all his works to be trusted. The Lord loves justice and right and fills the earth with his love. May your love be upon us, O Lord, as we place all our hope in you. or Alleluia! The Lord looks on those who revere him, on those who hope in his love, to rescue their souls from death, to keep them alive in famine. May your love be upon us, O Lord, as we place all our hope in you. or Alleluia!"
   },
-  Gospel: {
+
+
+
+  {
+    title: "Second Reading: 1 Peter 2:4‐9",
+    content: "The Lord is the living stone, rejected by men but chosen by God and precious to him; set yourselves close to him so that you too, the holy priesthood that offers the spiritual sacrifices which Jesus Christ has made acceptable to God, may be living stones making a spiritual house. As scripture says: See how I lay in Zion a precious cornerstone that I have chosen and the man who rests his trust on it will not be disappointed. That means that for you who are believers, it is precious; but for unbelievers, the stone rejected by the builders has proved to be the keystone, a stone to stumble over, a rock to bring men down. They stumble over it because they do not believe in the word; it was the fate in store for them. But you are a chosen race, a royal priesthood, a consecrated nation, a people set apart to sing the praises of God who called you out of the darkness into his wonderful light."
+  },
+
+
+
+  {
     title: "Gospel",
-    content: "Beloved, let us love one another, because love is from God..."
+    content: "Jesus said to his disciples: ‘Do not let your hearts be troubled. Trust in God still, and trust in me. There are many rooms in my Father’s house; if there were not, I should have told you. I am going now to prepare a place for you, and after I have gone and prepared you a place, I shall return to take you with me; so that where I am you may be too. You know the way to the place where I am going.’ Thomas said, ‘Lord, we do not know where you are going, so how can we know the way?’ Jesus said: ‘I am the Way, the Truth and the Life. No one can come to the Father except through me. If you know me, you know my Father too. From this moment you know him and have seen him.’ Philip said, ‘Lord, let us see the Father and then we shall be satisfied.’ ‘Have I been with you all this time, Philip,’ said Jesus to him ‘and you still do not know me? ‘To have seen me is to have seen the Father, so how can you say, “Let us see the Father”? Do you not believe that I am in the Father and the Father is in me? The words I say to you I do not speak as from myself: it is the Father, living in me, who is doing this work. You must believe me when I say that I am in the Father and the Father is in me; believe it on the evidence of this work, if for no other reason. I tell you most solemnly, whoever believes in me will perform the same works as I do myself, he will perform even greater works, because I am going to the Father.’"
   }
-};
+];
 
 
 const readingsContainer = document.getElementById("readingsContainer");
