@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>St. Mary Catholic Church Damaturu Parish</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+.header{
+  background:#8B0000;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+  display:flex;
+  flex-direction:column; /* THIS is the key fix */
+  align-items:center;
+}
+
+
+.logo{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  border-radius:50%;
+  background:#fff;
+  padding:5px;
+  margin-bottom:8px; /* adds space below logo */
+}
+
+
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:#f9f9f9;
+  color:#333;
+}
+
+/* HEADER */
+header{
+  background:#8B0000;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+
+/* NAV */
+nav{
+  position:sticky;
+  top:0;
+  background:#fff;
+  display:flex;
+  justify-content:space-between;
+  padding:10px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  z-index:9999;
+}
+
+.menu-icon{
+  cursor:pointer;
+  font-weight:bold;
+  color:#8B0000;
+}
+
+.dropdown{
+  display:none;
+  position:absolute;
+  background:#fff;
+  top:50px;
+  left:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  border-radius:8px;
+  overflow:hidden;
+}
+
+.dropdown a{
+  display:block;
+  padding:10px;
+  text-decoration:none;
+  color:#8B0000;
+}
+
+.dropdown a:hover{
+  background:#ffe6e6;
+}
+
+/* PAGES */
+.page{display:none;padding:20px;}
+.page.active{display:block;}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  text-align:center;
+}
+
+/* GALLERY FIX */
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card img:hover{
+  transform:scale(1.03);
+}
+
+/* BUTTON */
+.btn{
+  background:#8B0000;
+  color:#fff;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.ticker{
+  position:relative;
+  width:100vw;              /* full screen width */
+  left:50%;
+  transform:translateX(-50%); /* center it properly */
+  overflow:hidden;
+  background:#600000;
+  margin-top:10px;
+}
+
+.ticker-text{
+  display:inline-block;
+  white-space:nowrap;
+  padding:10px 0;
+  color:#fff;
+  font-size:14px;
+  animation:scrollText 20s linear infinite;
+}
+
+@keyframes scrollText{
+  0%{ transform:translateX(100%); }
+  100%{ transform:translateX(-100%); }
+}
+
+
+/* MODAL BACKGROUND */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  text-align:center;
+}
+
+/* IMAGE */
+.modal-content{
+  margin-top:60px;
+  max-width:90%;
+  max-height:70%;
+  border-radius:10px;
+}
+
+/* CLOSE BUTTON */
+.close{
+  position:absolute;
+  top:15px;
+  right:25px;
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* DOWNLOAD BUTTON */
+.download-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:10px 15px;
+  background:#8B0000;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+  font-weight:600;
+}
+
+
+
+.donate-box{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  width:90%;
+  max-width:400px;
+  margin:80px auto;
+  text-align:center;
+}
+
+.donate-box input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+.donate-box h2{
+  color:#8B0000;
+  margin-bottom:15px;
+}
+
+.donate-box select{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+
+/* GLOBAL LOADER */
+#loader{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#8B0000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  z-index:99999;
+}
+
+.spinner{
+  width:50px;
+  height:50px;
+  border:5px solid rgba(255,255,255,0.3);
+  border-top:5px solid #fff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:10px;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+/* PAGE FADE IN */
+.page{
+  display:none;
+  padding:20px;
+  animation:fadeIn 0.6s ease;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* CARD ANIMATION */
+.card{
+  animation:cardIn 0.5s ease;
+}
+
+@keyframes cardIn{
+  from{opacity:0; transform:scale(0.95);}
+  to{opacity:1; transform:scale(1);}
+}
+
+/* BUTTON LOADING */
+.btn.loading{
+  opacity:0.7;
+  pointer-events:none;
+}
+
+
+.reading-card{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,0.08);
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border-left:5px solid #8B0000;
+}
+
+.reading-title{
+  font-size:16px;
+  font-weight:700;
+  color:#8B0000;
+  margin:0;
+}
+
+.reading-text{
+  font-size:14px;
+  line-height:1.7;
+  color:#333;
+  text-align:justify;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+  <p>Loading St. Mary Parish...</p>
+</div>
+
+
+
+<header class="header">
+  <img src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1777725827/R_oml2ig.png" alt="Church Logo" class="logo">
+  <div>
+    <h1>St. Mary Catholic Church</h1>
+    <p>Damaturu Parish</p>
+<div class="ticker">
+  <div class="ticker-text" id="tickerText"></div>
+</div>
+</div>
+  </div>
+</header>
+
+
+
+
+
+<nav>
+  <div class="menu-icon" onclick="toggleMenu()">☰ Menu</div>
+
+<div id="menu" class="dropdown">
+  <a href="#" onclick="showPage('home')">Home</a>
+  <a href="#" onclick="showPage('news')">News</a>
+  <a href="#" onclick="showPage('readings')">Readings</a>
+  <a href="#" onclick="showPage('gallery')">Gallery</a>
+  <a href="#" onclick="showDonate()">Donate</a>
+</div>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="page active">
+  <h2>Welcome</h2>
+
+<p>
+St. Mary Catholic Church, Damaturu Parish, is a vibrant community of faith dedicated to worship, service, and spiritual growth. Founded on the teachings of Jesus Christ and guided by the traditions of the Catholic Church, the parish serves as a place of prayer, unity, and hope for all who seek God.
+
+As a parish entrusted to the care of the Blessed Virgin Mary, we strive to imitate her humility, obedience, and unwavering faith. Through the celebration of the Holy Mass, the Sacraments, and various pastoral activities, we nurture the spiritual lives of our members and strengthen our bond as one family in Christ.
+
+Our church is not only a place of worship but also a center for charity, evangelization, and community development. We welcome everyone—young and old, visitors and parishioners alike—to join us in praising God and growing together in love and faith.
+
+</p>
+</section>
+
+<!-- NEWS -->
+<section id="news" class="page">
+  <h2>Church News</h2>
+  <div class="grid" id="newsContainer"></div>
+</section>
+
+<!-- READINGS -->
+<section id="readings" class="page">
+  <h2>Sunday Readings</h2>
+  <div class="grid" id="readingsContainer"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="page">
+  <h2>Gallery</h2>
+
+  <div class="grid" id="galleryGrid">
+
+    <div class="card">
+      <img src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1777726463/20260419_074904_ebyjkz.jpg" onclick="openModal(this)">
+    </div>
+
+    <div class="card">
+      <img src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1777726458/20260419_073959_balte2.jpg" onclick="openModal(this)">
+    </div>
+
+    <div class="card">
+      <img src="https://res.cloudinary.com/djcnsgbzr/image/upload/v1777726457/20260404_080354_yccpbs.jpg" onclick="openModal(this)">
+    </div>
+
+  </div>
+</section>
+
+<script>
+
+/* MENU */
+function toggleMenu(){
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+/* PAGES */
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.getElementById("menu").style.display="none";
+}
+
+/* SAMPLE NEWS */
+const newsData = [
+  {title:"Sunday Mass Update", content:"Mass starts 8:00AM every Sunday"},
+  {title:"Parish Meeting", content:"All members invited on Friday"}
+];
+
+const newsContainer = document.getElementById("newsContainer");
+
+newsData.forEach(n=>{
+  newsContainer.innerHTML += `
+    <div class="card">
+      <h3>${n.title}</h3>
+      <p>${n.content}</p>
+    </div>
+  `;
+});
+
+
+const tickerText = document.getElementById("tickerText");
+
+// function to shorten text
+function shorten(text, maxLength = 40){
+  return text.length > maxLength 
+    ? text.substring(0, maxLength) + "..." 
+    : text;
+}
+
+// build ticker messages
+const messages = newsData.map(n => 
+  `${n.title}: ${shorten(n.content)}`
+);
+
+// display in ticker
+tickerText.innerText = "🔔 " + messages.join(" • ");
+
+
+
+
+
+
+
+
+/* SAMPLE READINGS */
+const readings = {
+  
+
+first: {
+title: "First Reading: Acts 6:1‐7",
+    content: "About this time, when the number of disciples was increasing, the Hellenists made a complaint against the Hebrews: in the daily distribution their own widows were being overlooked. So the Twelve called a full meeting of the disciples and addressed them, ‘It would not be right for us to neglect the word of God so as to give out food; you, brothers, must select from among yourselves seven men of good reputation, filled with the Spirit and with wisdom; we will hand over this duty to them, and continue to devote ourselves to prayer and to the service of the word.’ The whole assembly approved of this proposal and elected Stephen, a man full of faith and of the Holy Spirit, together with Philip, Prochorus, Nicanor, Timon, Parmenas, and Nicolaus of Antioch, a convert to Judaism. They presented these to the apostles, who prayed and laid their hands on them."
+},
+
+
+
+
+
+ second: {
+    title: "Second Reading",
+    content: "The Lord is my shepherd, there is nothing I shall want..."
+  },
+psalm: {
+    title: "Responsorial Psalm",
+    content: "The Lord is my shepherd, there is nothing I shall want..."
+  },
+  Gospel: {
+    title: "Gospel",
+    content: "Beloved, let us love one another, because love is from God..."
+  }
+};
+
+
+const readingsContainer = document.getElementById("readingsContainer");
+
+Object.values(readings).forEach(r => {
+  readingsContainer.innerHTML += `
+    <div class="reading-card">
+      <div class="reading-title">${r.title}</div>
+      <div class="reading-text">${r.content}</div>
+    </div>
+  `;
+});
+
+
+function openModal(img){
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const openBtn = document.getElementById("openBtn");
+
+  modal.style.display = "block";
+  modalImg.src = img.src;
+
+  downloadBtn.href = img.src;
+  openBtn.href = img.src;
+}
+
+
+
+
+function closeModal(){
+  document.getElementById("imageModal").style.display = "none";
+}
+
+window.onclick = function(e){
+  const modal = document.getElementById("imageModal");
+  if(e.target === modal){
+    modal.style.display = "none";
+  }
+}
+
+
+function showDonate(){
+  document.getElementById("donateModal").style.display = "block";
+}
+
+function closeDonate(){
+  document.getElementById("donateModal").style.display = "none";
+}
+
+
+
+
+function makePayment(){
+  const btn = document.querySelector(".donate-box .btn");
+  btn.classList.add("loading");
+  btn.innerText = "Processing...";
+
+  const name = document.getElementById("donorName").value;
+  const email = document.getElementById("donorEmail").value;
+  const amount = document.getElementById("donationAmount").value;
+  const currency = document.getElementById("donationCurrency").value;
+
+  if(!name || !email || !amount){
+    alert("Please fill all fields");
+    btn.classList.remove("loading");
+    btn.innerText = "Donate Now";
+    return;
+  }
+
+  FlutterwaveCheckout({
+    public_key: "FLWPUBK-36d9a62ddae2728dbd0beebf3c3cb99b-X",
+    tx_ref: "SMC_" + Date.now(),
+    amount: amount,
+    currency: currency, // 🔥 IMPORTANT CHANGE
+    payment_options: "card,banktransfer,ussd",
+    customer: {
+      email: email,
+      name: name
+    },
+    customizations: {
+      title: "St. Mary Catholic Church",
+      description: "Church Donation",
+      logo: "https://res.cloudinary.com/djcnsgbzr/image/upload/v1777725827/R_oml2ig.png"
+    },
+
+
+callback: function () {
+  alert("Thank you for your donation 🙏");
+  closeDonate();
+
+  btn.classList.remove("loading");
+  btn.innerText = "Donate Now";
+},
+
+
+
+onclose: function() {
+  btn.classList.remove("loading");
+  btn.innerText = "Donate Now";
+}
+
+  });
+}
+
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "none";
+});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  
+  <img class="modal-content" id="modalImg">
+
+  <div style="margin-top:20px;">
+  <a id="downloadBtn" class="download-btn" download>⬇ Download</a>
+  <a id="openBtn" class="download-btn" target="_blank">🔍 View Full</a>
+</div>
+</div>
+
+
+
+
+
+<div id="donateModal" class="modal">
+  <span class="close" onclick="closeDonate()">&times;</span>
+
+<div class="donate-box">
+  <h2>Support St. Mary Church</h2>
+
+  <input type="text" id="donorName" placeholder="Your Name">
+  <input type="email" id="donorEmail" placeholder="Email Address">
+
+  <!-- CURRENCY SELECT -->
+  <select id="donationCurrency">
+    <option value="NGN">Nigeria (NGN ₦)</option>
+    <option value="USD">USA (USD $)</option>
+    <option value="GBP">UK (GBP £)</option>
+    <option value="EUR">Europe (EUR €)</option>
+  </select>
+
+  <input type="number" id="donationAmount" placeholder="Amount">
+
+  <button class="btn" onclick="makePayment()">Donate Now</button>
+</div>
+</div>
+
+
+
+
+</body>
+</html>
